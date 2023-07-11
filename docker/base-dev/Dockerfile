@@ -3,11 +3,11 @@ FROM php:7.1-apache-buster
 
 RUN apt-get update && \
 	apt-get upgrade -y && \
-	apt-get install -y sudo curl wget git unzip libldap2-dev libpng++-dev libicu-dev libcurl4-gnutls-dev libxml2-dev libpq-dev libfreetype6-dev nano less vim && \
+	apt-get install -y sudo curl wget git unzip libldap2-dev libpng++-dev libicu-dev libcurl4-gnutls-dev libxml2-dev libpq-dev libfreetype6-dev libjpeg-dev nano less vim && \
 	apt-get clean && \
 	docker-php-ext-configure ldap && docker-php-ext-install ldap && \
 	docker-php-ext-configure bcmath && docker-php-ext-install bcmath && \
-	docker-php-ext-configure gd --with-freetype-dir=/usr/include/freetype2 && docker-php-ext-install gd && \
+	docker-php-ext-configure gd --with-freetype-dir=/usr/include/freetype2 --with-jpeg-dir=/usr/include && docker-php-ext-install gd && \
 	docker-php-ext-install opcache intl dom pdo pdo_mysql pdo_pgsql
 
 RUN pecl install xdebug-2.9.3 && docker-php-ext-enable xdebug && \
