@@ -29,7 +29,7 @@ RUN find /etc/apache2 -type f -exec sed 's@/var/www/html@/var/www/pk/web@g' -i \
 RUN cd /tmp && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
 	HASH="$(wget -q -O - https://composer.github.io/installer.sig)" && \
 	php -r "if (hash_file('SHA384', 'composer-setup.php') === '$HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); exit(1); } echo PHP_EOL;" && \
-	php composer-setup.php --install-dir=/usr/local/bin --filename=composer --version 1.10.9
+	php composer-setup.php --install-dir=/usr/local/bin --filename=composer --version 1.10.21
 
 COPY xdebug.config /tmp
 RUN cat /tmp/xdebug.config >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
