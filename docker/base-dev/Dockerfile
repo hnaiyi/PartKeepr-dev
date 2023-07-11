@@ -8,8 +8,9 @@ RUN apt-get update && \
 	docker-php-ext-configure ldap && docker-php-ext-install ldap && \
 	docker-php-ext-configure bcmath && docker-php-ext-install bcmath && \
 	docker-php-ext-configure gd --with-freetype-dir=/usr/include/freetype2 && docker-php-ext-install gd && \
-	docker-php-ext-install opcache intl dom pdo pdo_mysql pdo_pgsql && \
-	pecl install xdebug && docker-php-ext-enable xdebug && \
+	docker-php-ext-install opcache intl dom pdo pdo_mysql pdo_pgsql
+
+RUN pecl install xdebug-2.9.3 && docker-php-ext-enable xdebug && \
 	pecl install apcu_bc-beta && \
 	docker-php-ext-enable apcu apc && \
 	mv /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini /usr/local/etc/php/conf.d/10-docker-php-ext-apcu.ini && \
