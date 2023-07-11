@@ -12,9 +12,9 @@ services:
       - 8082:80
     networks:
       partkeepr-internal:
-        ipv4_address: 172.100.2.2
+        ipv4_address: 172.100.2.4
         aliases:
-          - partkeepr-server
+          - partkeepr-dev-server
     volumes:
       - "../..:/var/www/pk"
     env_file:
@@ -22,32 +22,33 @@ services:
     environment:
       GITHUB_DEBUG_UID: 1000
  
-  db-instance:
-    image: hnaiyi/mysql:partkeepr
-    platform: linux/amd64
-    volumes:
-      - db-storage:/var/lib/mysql
-    networks:
-      partkeepr-internal:
-        ipv4_address: 172.100.2.3
-        aliases:
-          - mysql-server
-    environment:
-      # See https://hub.docker.com/_/mysql for all available variables.
-      MYSQL_ROOT_PASSWORD: 123456
-      MYSQL_DATABASE: partkeepr
-      MYSQL_ALLOW_EMPTY_PASSWORD: false
+        #  db-instance:
+        #    image: hnaiyi/mysql:partkeepr
+        #    platform: linux/amd64
+        #    volumes:
+        #      - db-storage:/var/lib/mysql
+        #    networks:
+        #      partkeepr-internal:
+        #        ipv4_address: 172.100.2.3
+        #        aliases:
+        #          - mysql-server
+        #    environment:
+        #      # See https://hub.docker.com/_/mysql for all available variables.
+        #      MYSQL_ROOT_PASSWORD: 123456
+        #      MYSQL_DATABASE: partkeepr
+        #      MYSQL_ALLOW_EMPTY_PASSWORD: false
 
 networks:
   partkeepr-internal:
-    name: partkeepr-dev-network
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.100.2.0/24
-          ip_range: 172.100.2.0/24
-          gateway: 172.100.2.1
+    name: network-partkeepr
+    external: true
+      #    driver: bridge
+      #    ipam:
+      #      driver: default
+      #      config:
+      #        - subnet: 172.100.2.0/24
+      #          ip_range: 172.100.2.0/24
+      #          gateway: 172.100.2.1
 
 volumes:
   db-storage:
