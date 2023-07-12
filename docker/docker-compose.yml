@@ -1,0 +1,26 @@
+version: "3.7"
+
+services:
+  app:
+    image: hnaiyi/partkeepr-dev:latest
+    ports:
+      - 80:80
+    networks:
+      partkeepr-internal:
+        ipv4_address: 172.100.2.4
+        aliases:
+          - partkeepr-dev-server
+    volumes:
+      - "..:/var/www/pk"
+    env_file:
+      - ./github.env
+    environment:
+      GITHUB_DEBUG_UID: 1000
+      ADD_PHPINFO_FILE: 1
+      #PARTKEEPR_FORCE_UPDATE: "yes"
+
+networks:
+  partkeepr-internal:
+    name: network-partkeepr
+    external: true
+

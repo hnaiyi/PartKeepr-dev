@@ -1,0 +1,40 @@
+version: "3.7"
+name: partkeepr-${ENV}
+
+services:
+  db-instance:
+    image: hnaiyi/mysql:partkeepr
+    platform: linux/amd64
+    volumes:
+      - db-storage:/var/lib/mysql
+    networks:
+      partkeepr-internal:
+        ipv4_address: 172.100.2.3
+        aliases:
+          - mysql-server
+    environment:
+      # See https://hub.docker.com/_/mysql for all available variables.
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
+      MYSQL_ALLOW_EMPTY_PASSWORD: false
+
+networks:
+  partkeepr-internal:
+    name: $NETWORK_NAME
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.100.2.0/24
+          ip_range: 172.100.2.0/24
+          gateway: 172.100.2.1
+
+volumes:
+  db-storage:
+    name: partkeepr-data-${ENV}
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: $DB_DATA_LOCATION
+
