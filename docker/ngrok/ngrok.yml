@@ -1,0 +1,15 @@
+authtoken: 2SKC39bDtIucRImQkeMCAGwt1bF_3m4tt3aTucL6gcvZ6Mjfd
+version: 2
+tunnels:
+  your_tunnel_name:
+    proto: http
+    domain: devere.naiyih.com
+    addr: 172.100.2.1:80
+
+    # -------------------------
+    # Additional options
+    # -------------------------
+    # auth: "username:password"
+    host_header: rewrite
+    # inspect: true
+    # bind_tls: true
